@@ -10,7 +10,12 @@ defmodule BuenaVida.Care.ParticipantsOnCaregivers do
   end
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
+
+    create :create do
+      primary? true
+      accept [:participantId, :caregiverId, :assignedAt, :assignedBy]
+    end
   end
 
   attributes do

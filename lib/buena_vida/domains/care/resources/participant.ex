@@ -10,7 +10,16 @@ defmodule BuenaVida.Care.Participant do
   end
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
+
+    create :create do
+      primary? true
+      accept [
+        :name, :gender, :medicaidId, :dob, :location, :community, :address,
+        :primaryPhone, :secondaryPhone, :isActive, :locStartDate, :locEndDate,
+        :pocStartDate, :pocEndDate, :units, :hours, :hdm, :adhc, :cmID
+      ]
+    end
   end
 
   attributes do
