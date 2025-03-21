@@ -46,6 +46,10 @@ config :buena_vida,
   ecto_repos: [BuenaVida.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+# config/config.exs
+config :buena_vida,
+  ash_domains: [BuenaVida.Care]
+
 # Configures the endpoint
 config :buena_vida, BuenaVidaWeb.Endpoint,
   url: [host: "localhost"],
