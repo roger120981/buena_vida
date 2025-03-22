@@ -9,7 +9,9 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/buena_vida_web.ex",
-    "../lib/buena_vida_web/**/*.*ex"
+    "../lib/buena_vida_web/**/*.*ex",
+    "../lib/buena_vida_web/**/*.sface",
+    "../priv/catalogue/**/*.{ex,sface}"
   ],
   theme: {
     extend: {

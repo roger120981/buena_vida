@@ -10,7 +10,8 @@ defmodule BuenaVida.MixProject do
       start_permanent: Mix.env() == :prod,
       consolidate_protocols: Mix.env() != :dev,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      compilers: Mix.compilers() ++ [:surface]
     ]
   end
 
@@ -35,7 +36,6 @@ defmodule BuenaVida.MixProject do
     [
       {:ash_postgres, "~> 2.0"},
       {:ash_phoenix, "~> 2.0"},
-      {:sourceror, "~> 1.7", only: [:dev, :test]},
       {:ash, "~> 3.0"},
       {:igniter, "~> 0.5", only: [:dev, :test]},
       {:phoenix, "~> 1.7.20"},
@@ -64,7 +64,9 @@ defmodule BuenaVida.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:faker, "~> 0.18.0"}
+      {:faker, "~> 0.18.0"},
+      {:surface, "~> 0.12.1"},
+      {:sourceror, "~> 1.0"}
     ]
   end
 
