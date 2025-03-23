@@ -11,7 +11,7 @@ defmodule BuenaVida.MixProject do
       consolidate_protocols: Mix.env() != :dev,
       aliases: aliases(),
       deps: deps(),
-      compilers: Mix.compilers() ++ [:surface]
+      compilers: Mix.compilers()
     ]
   end
 
@@ -63,8 +63,7 @@ defmodule BuenaVida.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:faker, "~> 0.18.0"},
-      {:surface, "~> 0.12.1"},
-      {:sourceror, "~> 1.0"},
+      {:sourceror, "~> 1.7", only: [:dev, :test]},
       {:live_react, "~> 1.0.0"},
       {:nodejs, "~> 3.1.2"}
     ]

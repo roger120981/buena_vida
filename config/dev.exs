@@ -53,18 +53,18 @@ config :buena_vida, BuenaVidaWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :buena_vida, BuenaVidaWeb.Endpoint,
-  reloadable_compilers: [:gettext, :elixir, :app, :surface],
+  reloadable_compilers: [:gettext, :elixir, :app],
   live_reload: [
     notify: [
       live_view: [
-        ~r"lib/my_app_web/core_components.ex$",
-        ~r"lib/my_app_web/(live|components)/.*(ex|heex|sface)$"
+        ~r"lib/buena_vida_web/core_components.ex$",
+        ~r"lib/buena_vida_web/(live|components)/.*(ex|heex)$"
       ]
     ],
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/buena_vida_web/(controllers|live|components)/.*(ex|heex|sface|js)$"
+      ~r"lib/buena_vida_web/(controllers|live|components)/.*(ex|heex|js)$"
     ]
   ]
 

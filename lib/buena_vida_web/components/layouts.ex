@@ -10,6 +10,5 @@ defmodule BuenaVidaWeb.Layouts do
   """
   use BuenaVidaWeb, :html
 
-  embed_sface "layouts/root.sface"
-  embed_sface "layouts/app.sface"
+  embed_templates "layouts/*"
 end

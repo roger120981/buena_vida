@@ -1,24 +1,20 @@
 # lib/buena_vida_web/live/test_live.ex
 defmodule BuenaVidaWeb.TestLive do
-  use BuenaVidaWeb, :surface_live_view
-
-  alias BuenaVidaWeb.TestCard
+  use BuenaVidaWeb, :live_view
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket, :active_page, "test")
-    {:ok, socket, layout: {BuenaVidaWeb.Layouts, :app}}
+    {:ok, assign(socket, message: "¡Hola desde TestLive!")}
   end
 
   @impl true
   def render(assigns) do
-    ~F"""
+    ~H"""
     <div class="flex min-h-screen justify-center items-center">
-
-      <TestCard title="Test Card">
-      <.react name="Simple" />
-        This is a test to verify Surface is working correctly!
-      </TestCard>
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-gray-800">Test LiveView</h1>
+        <p class="mt-4 text-lg text-gray-600"><%= @message %></p>
+      </div>
     </div>
     """
   end
