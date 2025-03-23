@@ -25,8 +25,7 @@ config :buena_vida, BuenaVidaWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "hg/pA0ZdDmPQJNUMGrLx2nOKw9zHWI83TaM84iE5RxIqE37tdOX5SyDWFxuLGeZj",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:buena_vida, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:buena_vida, ~w(--watch)]}
+    npm: ["run", "dev", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
@@ -56,6 +55,12 @@ config :buena_vida, BuenaVidaWeb.Endpoint,
 config :buena_vida, BuenaVidaWeb.Endpoint,
   reloadable_compilers: [:gettext, :elixir, :app, :surface],
   live_reload: [
+    notify: [
+      live_view: [
+        ~r"lib/my_app_web/core_components.ex$",
+        ~r"lib/my_app_web/(live|components)/.*(ex|heex|sface)$"
+      ]
+    ],
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
@@ -84,3 +89,8 @@ config :phoenix_live_view,
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+config :live_react,
+  vite_host: "http://localhost:5173",
+  ssr_module: LiveReact.SSR.ViteJS,
+  ssr: true

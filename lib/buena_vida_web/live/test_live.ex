@@ -5,10 +5,18 @@ defmodule BuenaVidaWeb.TestLive do
   alias BuenaVidaWeb.TestCard
 
   @impl true
+  def mount(_params, _session, socket) do
+    socket = assign(socket, :active_page, "test")
+    {:ok, socket, layout: {BuenaVidaWeb.Layouts, :app}}
+  end
+
+  @impl true
   def render(assigns) do
     ~F"""
     <div class="flex min-h-screen justify-center items-center">
+
       <TestCard title="Test Card">
+      <.react name="Simple" />
         This is a test to verify Surface is working correctly!
       </TestCard>
     </div>

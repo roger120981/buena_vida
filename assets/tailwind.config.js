@@ -11,7 +11,9 @@ module.exports = {
     "../lib/buena_vida_web.ex",
     "../lib/buena_vida_web/**/*.*ex",
     "../lib/buena_vida_web/**/*.sface",
-    "../priv/catalogue/**/*.{ex,sface}"
+    "../priv/catalogue/**/*.{ex,sface}",
+    "./react-components/**/*.jsx", // <- if you are using jsx
+    "./react-components/**/*.tsx" // <- if you are using tsx
   ],
   theme: {
     extend: {

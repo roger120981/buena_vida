@@ -22,11 +22,18 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import Hooks from "./_hooks"
+import { getHooks } from  "live_react";
+import components from "../react-components";
+
+const hooks = {
+  ...Hooks,
+  ...getHooks(components),
+};
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  hooks: Hooks,
+  hooks: hooks,
   params: {_csrf_token: csrfToken}
 })
 

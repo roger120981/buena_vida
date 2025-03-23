@@ -96,6 +96,8 @@ defmodule BuenaVidaWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
+
+      import LiveReact
     end
   end
 

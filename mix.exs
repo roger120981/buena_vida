@@ -47,8 +47,6 @@ defmodule BuenaVida.MixProject do
       {:phoenix_live_view, "~> 1.0.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
-      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:heroicons,
        github: "tailwindlabs/heroicons",
        tag: "v2.1.1",
@@ -66,7 +64,9 @@ defmodule BuenaVida.MixProject do
       {:bandit, "~> 1.5"},
       {:faker, "~> 0.18.0"},
       {:surface, "~> 0.12.1"},
-      {:sourceror, "~> 1.0"}
+      {:sourceror, "~> 1.0"},
+      {:live_react, "~> 1.0.0"},
+      {:nodejs, "~> 3.1.2"}
     ]
   end
 
@@ -78,17 +78,17 @@ defmodule BuenaVida.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ash.setup", "assets.setup", "assets.build", "run priv/repo/seeds.exs"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ash.setup --quiet", "test"],
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind buena_vida", "esbuild buena_vida"],
+      setup: ["deps.get", "assets.setup", "assets.build"],
+      "assets.setup": ["cmd --cd assets npm install"],
+      "assets.build": [
+        "cmd --cd assets npm run build",
+        "cmd --cd assets npm run build-server"
+      ],
       "assets.deploy": [
-        "tailwind buena_vida --minify",
-        "esbuild buena_vida --minify",
+        "cmd --cd assets npm run build",
+        "cmd --cd assets npm run build-server",
         "phx.digest"
       ]
     ]
-  end
+    end
 end

@@ -17,8 +17,12 @@ defmodule BuenaVidaWeb.Router do
   scope "/", BuenaVidaWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    live "/test", TestLive
+    live "/dashboard", DashboardLive, :index
+    live "/participants", ParticipantsLive, :index
+    live "/case-managers", CaseManagersLive, :index
+    live "/caregivers", CaregiversLive, :index
+    live "/agencies", AgenciesLive, :index
+    live "/test", TestLive, :index # Mantengo esta para tu prueba
   end
 
   # Other scopes may use custom stacks.
