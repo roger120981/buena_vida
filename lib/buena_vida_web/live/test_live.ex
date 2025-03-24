@@ -13,6 +13,7 @@ defmodule BuenaVidaWeb.TestLive do
     <div class="flex min-h-screen justify-center items-center">
       <div class="text-center">
         <h1 class="text-3xl font-bold text-gray-800">Test LiveView</h1>
+        <.react name="Simple" />
         <p class="mt-4 text-lg text-gray-600"><%= @message %></p>
       </div>
     </div>
