@@ -2,7 +2,20 @@
 defmodule BuenaVida.Care.Caregiver do
   use Ash.Resource,
     domain: BuenaVida.Care,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshJsonApi.Resource]
+
+  json_api do
+    type "caregiver"
+    routes do
+      base "/caregivers"
+      get :read
+      index :read
+      post :create
+      patch :update
+      delete :destroy
+    end
+  end
 
   postgres do
     table "caregivers"
@@ -21,15 +34,18 @@ defmodule BuenaVida.Care.Caregiver do
   attributes do
     integer_primary_key :id
     attribute :name, :string, allow_nil?: false, constraints: [max_length: 255]
-    attribute :email, :string, allow_nil?: true, constraints: [max_length: 255, match: ~r/^[^\s@]+@[^\s@]+\.[^\s@]+$/]
-    attribute :phone, :string, allow_nil?: true, constraints: [max_length: 20, match: ~r/^\+?\d{6,15}$/]
+
+    attribute :email, :string,
+      allow_nil?: true,
+      constraints: [max_length: 255, match: ~r/^[^\s@]+@[^\s@]+\.[^\s@]+$/]
+
+    attribute :phone, :string,
+      allow_nil?: true,
+      constraints: [max_length: 20, match: ~r/^\+?\d{6,15}$/]
+
     attribute :isActive, :boolean, allow_nil?: false, default: true
     create_timestamp :createdAt
     update_timestamp :updatedAt
-  end
-
-  identities do
-    identity :unique_name, :name
   end
 
   relationships do
@@ -40,5 +56,9 @@ defmodule BuenaVida.Care.Caregiver do
       destination_attribute :id
       destination_attribute_on_join_resource :participantId
     end
+  end
+
+  identities do
+    identity :unique_name, :name
   end
 end

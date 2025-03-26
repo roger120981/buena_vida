@@ -2,7 +2,20 @@
 defmodule BuenaVida.Care.Participant do
   use Ash.Resource,
     domain: BuenaVida.Care,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshJsonApi.Resource]
+
+  json_api do
+    type "participant"
+    routes do
+      base "/participants"
+      get :read
+      index :read
+      post :create
+      patch :update
+      delete :destroy
+    end
+  end
 
   postgres do
     table "participants"
@@ -14,12 +27,43 @@ defmodule BuenaVida.Care.Participant do
 
     create :create do
       primary? true
+
       accept [
-        :name, :gender, :medicaidId, :dob, :location, :community, :address,
-        :primaryPhone, :secondaryPhone, :isActive, :locStartDate, :locEndDate,
-        :pocStartDate, :pocEndDate, :units, :hours, :hdm, :adhc, :cmID
+        :name,
+        :gender,
+        :medicaidId,
+        :dob,
+        :location,
+        :community,
+        :address,
+        :primaryPhone,
+        :secondaryPhone,
+        :isActive,
+        :locStartDate,
+        :locEndDate,
+        :pocStartDate,
+        :pocEndDate,
+        :units,
+        :hours,
+        :hdm,
+        :adhc,
+        :cmID
       ]
     end
+  end
+
+  validations do
+    validate compare(:locEndDate,
+               greater_than_or_equal_to: :locStartDate
+             ),
+             on: [:create, :update],
+             message: "locStartDate must be before or equal to locEndDate"
+
+    validate compare(:pocEndDate,
+               greater_than_or_equal_to: :pocStartDate
+             ),
+             on: [:create, :update],
+             message: "pocStartDate must be before or equal to pocEndDate"
   end
 
   attributes do
@@ -31,8 +75,15 @@ defmodule BuenaVida.Care.Participant do
     attribute :location, :string, allow_nil?: false, constraints: [max_length: 100]
     attribute :community, :string, allow_nil?: false, constraints: [max_length: 100]
     attribute :address, :string, allow_nil?: false, constraints: [max_length: 255]
-    attribute :primaryPhone, :string, allow_nil?: false, constraints: [max_length: 20, match: ~r/^\+?\d{6,15}$/]
-    attribute :secondaryPhone, :string, allow_nil?: true, constraints: [max_length: 20, match: ~r/^\+?\d{6,15}$/]
+
+    attribute :primaryPhone, :string,
+      allow_nil?: false,
+      constraints: [max_length: 20, match: ~r/^\+?\d{6,15}$/]
+
+    attribute :secondaryPhone, :string,
+      allow_nil?: true,
+      constraints: [max_length: 20, match: ~r/^\+?\d{6,15}$/]
+
     attribute :isActive, :boolean, allow_nil?: false, default: true
     attribute :locStartDate, :datetime, allow_nil?: false
     attribute :locEndDate, :datetime, allow_nil?: false
@@ -45,10 +96,6 @@ defmodule BuenaVida.Care.Participant do
     attribute :cmID, :integer, allow_nil?: false
     create_timestamp :createdAt
     update_timestamp :updatedAt
-  end
-
-  identities do
-    identity :unique_name, :name
   end
 
   relationships do
@@ -67,15 +114,7 @@ defmodule BuenaVida.Care.Participant do
     end
   end
 
-  validations do
-    validate compare(:locEndDate,
-      greater_than_or_equal_to: :locStartDate),
-      on: [:create, :update],
-      message: "locStartDate must be before or equal to locEndDate"
-
-    validate compare(:pocEndDate,
-      greater_than_or_equal_to: :pocStartDate),
-      on: [:create, :update],
-      message: "pocStartDate must be before or equal to pocEndDate"
+  identities do
+    identity :unique_name, :name
   end
 end

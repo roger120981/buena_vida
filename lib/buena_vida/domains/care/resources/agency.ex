@@ -2,7 +2,20 @@
 defmodule BuenaVida.Care.Agency do
   use Ash.Resource,
     domain: BuenaVida.Care,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshJsonApi.Resource]
+
+  json_api do
+    type "agency"
+    routes do
+      base "/agencies"
+      get :read
+      index :read
+      post :create
+      patch :update
+      delete :destroy
+    end
+  end
 
   postgres do
     table "agencies"
@@ -25,13 +38,13 @@ defmodule BuenaVida.Care.Agency do
     update_timestamp :updatedAt
   end
 
-  identities do
-    identity :unique_name, :name
-  end
-
   relationships do
     has_many :caseManagers, BuenaVida.Care.CaseManager do
       destination_attribute :agencyId
     end
+  end
+
+  identities do
+    identity :unique_name, :name
   end
 end

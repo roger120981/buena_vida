@@ -2,7 +2,23 @@
 defmodule BuenaVida.Care.ParticipantsOnCaregivers do
   use Ash.Resource,
     domain: BuenaVida.Care,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshJsonApi.Resource]
+
+  json_api do
+    type "participants_on_caregivers"
+    primary_key do
+      keys [:participantId, :caregiverId] # Usamos un bloque do con keys
+    end
+    routes do
+      base "/participants_on_caregivers"
+      get :read
+      index :read
+      post :create
+      patch :update
+      delete :destroy
+    end
+  end
 
   postgres do
     table "participants_on_caregivers"
@@ -25,10 +41,6 @@ defmodule BuenaVida.Care.ParticipantsOnCaregivers do
     attribute :caregiverId, :integer, allow_nil?: false, primary_key?: true
   end
 
-  identities do
-    identity :unique_assignment, [:participantId, :caregiverId]
-  end
-
   relationships do
     belongs_to :participant, BuenaVida.Care.Participant do
       source_attribute :participantId
@@ -41,5 +53,9 @@ defmodule BuenaVida.Care.ParticipantsOnCaregivers do
       destination_attribute :id
       allow_nil? false
     end
+  end
+
+  identities do
+    identity :unique_assignment, [:participantId, :caregiverId]
   end
 end
