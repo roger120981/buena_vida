@@ -1,11 +1,10 @@
 [
-  import_deps: [:ash_postgres, :ash, :ecto, :ecto_sql, :phoenix, :surface],
+  import_deps: [:ash_json_api, :ash_postgres, :ash, :ecto, :ecto_sql, :phoenix],
   subdirectories: ["priv/*/migrations"],
-  plugins: [Spark.Formatter, Phoenix.LiveView.HTMLFormatter, Surface.Formatter.Plugin],
+  plugins: [Spark.Formatter, Phoenix.LiveView.HTMLFormatter],
   inputs: [
-  "*.{heex,ex,exs}",
-  "{config,lib,test}/**/*.{heex,ex,exs}",
-  "priv/*/seeds.exs",
-  "{lib,test}/**/*.sface"
-]
+    "*.{heex,ex,exs}",
+    "{config,lib,test}/**/*.{heex,ex,exs}",
+    "priv/*/seeds.exs"
+  ]
 ]

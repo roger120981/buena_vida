@@ -34,6 +34,8 @@ defmodule BuenaVida.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:open_api_spex, "~> 3.0"},
+      {:ash_json_api, "~> 1.0"},
       {:ash_postgres, "~> 2.0"},
       {:ash_phoenix, "~> 2.0"},
       {:ash, "~> 3.0"},
@@ -87,7 +89,8 @@ defmodule BuenaVida.MixProject do
         "cmd --cd assets npm run build",
         "cmd --cd assets npm run build-server",
         "phx.digest"
-      ]
+      ],
+      "phx.routes": ["phx.routes", "ash_json_api.routes"]
     ]
-    end
+  end
 end

@@ -21,4 +21,5 @@ config :logger, level: :info
 # of environment variables, is done on config/runtime.exs.
 config :live_react,
   ssr_module: LiveReact.SSR.NodeJS,
-  ssr: true # or false if you don't want SSR in production
+  # or false if you don't want SSR in production
+  ssr: true

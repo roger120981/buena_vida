@@ -14,6 +14,16 @@ defmodule BuenaVidaWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api/json" do
+    pipe_through [:api]
+
+    forward "/swaggerui", OpenApiSpex.Plug.SwaggerUI,
+      path: "/api/json/open_api",
+      default_model_expand_depth: 4
+
+    forward "/", BuenaVidaWeb.AshJsonApiRouter
+  end
+
   scope "/", BuenaVidaWeb do
     pipe_through :browser
 
@@ -22,7 +32,8 @@ defmodule BuenaVidaWeb.Router do
     live "/case-managers", CaseManagersLive, :index
     live "/caregivers", CaregiversLive, :index
     live "/agencies", AgenciesLive, :index
-    live "/test", TestLive, :index # Mantengo esta para tu prueba
+    # Mantengo esta para tu prueba
+    live "/test", TestLive, :index
   end
 
   # Other scopes may use custom stacks.
